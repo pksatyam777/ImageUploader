@@ -9,5 +9,7 @@ urlpatterns = [
     path('images/new/', views.image_create, name='image_create'),
     path('images/<int:pk>/edit/', views.image_update, name='image_update'),
     path('images/<int:pk>/delete/', views.image_delete, name='image_delete'),
+    path('rest-auth/facebook/', views.FacebookLogin.as_view(), name='fb_login'),
+    path('rest-auth/google/', views.GoogleLogin.as_view(), name='google_login'),
 ]
 

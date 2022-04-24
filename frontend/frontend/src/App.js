@@ -3,7 +3,13 @@ import { Button, Card, Form } from "react-bootstrap";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FacebookLoginn from "./Components/Auth/facebookLogin";
+import GoogleLogin from "./Components/Auth/googleLogin";
 import "./App.css";
+
+
+
+
 const App = () => {
   const [imgName, setImageName] = useState("");
   const [imgSrc, setImageSrc] = useState("");
@@ -20,19 +26,19 @@ const App = () => {
 
     e.preventDefault();
     const data = {
-      image_name: imgName,
+      name: imgName,
       image: imgSrc,
-      image_caption: imgAlt,
-      image_category: category,
+      description: imgAlt,
+      category: category,
     };
     const options = {
       headers: { "content-type": "multipart/form-data" },
     };
     const datas = new FormData();
-    datas.append("image_name", data.image_name);
+    datas.append("name", data.name);
     datas.append("image", data.image);
-    datas.append("image_caption", data.image_caption);
-    datas.append("image_category", data.image_category);
+    datas.append("description", data.description);
+    datas.append("category", data.category);
 
     axios
       .post("http://localhost:8000/api/images/new/", datas, options)
@@ -61,10 +67,10 @@ const App = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(display.filter(item => item.image_name.toLowerCase().includes(searchTerm)));
+    console.log(display.filter(item => item.name.toLowerCase().includes(searchTerm)));
     
     
-    setDisplay(display.filter(item => item.image_name.toLowerCase().includes(searchTerm)));
+    setDisplay(display.filter(item => item.name.toLowerCase().includes(searchTerm)));
     
     setTimeout(() => {
     axios.get("http://localhost:8000/api/images/").then((res) => {
@@ -168,6 +174,9 @@ const App = () => {
           <Button variant="dark" style={{width:"13%"}} onClick={handleSearch}>
                 Search
               </Button>
+
+          <FacebookLoginn />
+          <GoogleLogin />
           <br /><br />
           <div className="row">
             {display.map((item, index) => (
